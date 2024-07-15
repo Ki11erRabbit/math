@@ -244,4 +244,28 @@ fun level-two-blas-tests()
     trsv( a, x, row_major )
     expect(True, { True }, details = "trsv failed")
 */
-    
+
+
+// General Matrix Multiply
+// Level 3 BLAS
+// WARNING: This will mutate the `c` `blasmatrix`
+pub extern gemm( a : blasmatrix, alpha: float64, b : blasmatrix, beta: float64, c : blasmatrix, row-major : bool, transpose-a : bool = False, transpose-b : bool = False ) : blasmatrix
+  c "kk_gemm"
+
+// Computes a matrix-matrix product where one input matrix is symmetric and one matrix is general.
+// Level 3 BLAS
+// WARNING: This will mutate the `c` `blasmatrix`
+pub extern symm( a : blasmatrix, alpha: float64, b : blasmatrix, beta: float64, c : blasmatrix, row-major : bool, left-symmetric : bool, upper-triangular : bool ) : blasmatrix
+  c "kk_symm"
+
+// Performs a symmetric rank-k update.
+// Level 3 BLAS
+// WARNING: This will mutate the `c` `blasmatrix`
+pub extern syrk( a : blasmatrix, alpha: float64, beta: float64, c : blasmatrix, row-major : bool, upper-triangular : bool, transposed : bool = False) : blasmatrix
+  c "kk_syrk"
+
+// Performs a symmetric rank-2k update.
+// Level 3 BLAS
+// WARNING: This will mutate the `c` `blasmatrix`
+pub extern syr2k( a : blasmatrix, alpha: float64, b : blasmatrix, beta: float64, c : blasmatrix, row-major : bool, upper-triangular : bool, transposed : bool = False) : blasmatrix
+  c "kk_syr2k"
