@@ -269,3 +269,15 @@ pub extern syrk( a : blasmatrix, alpha: float64, beta: float64, c : blasmatrix, 
 // WARNING: This will mutate the `c` `blasmatrix`
 pub extern syr2k( a : blasmatrix, alpha: float64, b : blasmatrix, beta: float64, c : blasmatrix, row-major : bool, upper-triangular : bool, transposed : bool = False) : blasmatrix
   c "kk_syr2k"
+
+// Computes a matrix-matrix product where one input matrix is triangular and one input matrix is general.
+// Level 3 BLAS
+// WARNING: This will mutate the `b` `blasmatrix`
+pub extern trmm( a : blasmatrix, alpha: float64, b : blasmatrix, row-major : bool, left : bool, upper-triangular : bool, unit-triangular : bool, transposed : bool = False) : blasmatrix
+  c "kk_trmm"
+
+// Solves a triangular matrix equation (forward or backward solve).
+// Level 3 BLAS
+// WARNING: This will mutate the `b` `blasmatrix`
+pub extern trsm( a : blasmatrix, alpha: float64, b : blasmatrix, row-major : bool, left : bool, upper-triangular : bool, unit-triangular : bool, transposed : bool = False) : blasmatrix
+  c "kk_trsm"

@@ -440,5 +440,100 @@ kk_math_blas_matrix__blasmatrix kk_syr2k(kk_math_blas_matrix__blasmatrix a, doub
     cblas_dsyr2k(major, uplo, transposed, c.rows, c.cols, alpha, (double*)kk_cptr_raw_unbox_borrowed(a.internal.owned, ctx), leading_dimension_a, (double*)kk_cptr_raw_unbox_borrowed(b.internal.owned, ctx), leading_dimension_b, beta, (double*)kk_cptr_raw_unbox_borrowed(c.internal.owned, ctx), leading_dimension_c);
 
     return c;
+}
+
+kk_math_blas_matrix__blasmatrix kk_trmm(kk_math_blas_matrix__blasmatrix a, double alpha, kk_math_blas_matrix__blasmatrix b, bool row_major, bool left, bool upper_triangular, bool unit_triangular, bool transposed, kk_context_t* ctx) {
+    CBLAS_ORDER major;
+    int64_t leading_dimension_a;
+    int64_t leading_dimension_b;
+    if (row_major) {
+        major = CblasRowMajor;
+        leading_dimension_a = a.rows;
+        leading_dimension_b = a.cols;
+    } else {
+        major = CblasColMajor;
+        leading_dimension_a = a.cols;
+        leading_dimension_b = b.cols;
+    }
+
+    CBLAS_UPLO uplo;
+    if (upper_triangular) {
+        uplo = CblasUpper;
+    } else {
+        uplo = CblasLower;
+    }
+
+    CBLAS_SIDE side;
+    if (left) {
+        side = CblasLeft;
+    } else {
+        side = CblasRight;
+    }
+
     
+    CBLAS_TRANSPOSE transpose;
+    if (transposed) {
+        transpose = CblasTrans;
+    } else {
+        transpose = CblasNoTrans;
+    }
+    
+    CBLAS_DIAG diag;
+    if (unit_triangular) {
+        diag = CblasUnit;
+    } else {
+        diag = CblasNonUnit;
+    }
+
+    cblas_dtrmm(major, side, uplo, transpose, diag, b.rows, b.cols, alpha, (double*)kk_cptr_raw_unbox_borrowed(a.internal.owned, ctx), leading_dimension_a, (double*)kk_cptr_raw_unbox_borrowed(b.internal.owned, ctx), leading_dimension_b);
+
+    return b;
+}
+
+kk_math_blas_matrix__blasmatrix kk_trsm(kk_math_blas_matrix__blasmatrix a, double alpha, kk_math_blas_matrix__blasmatrix b, bool row_major, bool left, bool upper_triangular, bool unit_triangular, bool transposed, kk_context_t* ctx) {
+    CBLAS_ORDER major;
+    int64_t leading_dimension_a;
+    int64_t leading_dimension_b;
+    if (row_major) {
+        major = CblasRowMajor;
+        leading_dimension_a = a.rows;
+        leading_dimension_b = a.cols;
+    } else {
+        major = CblasColMajor;
+        leading_dimension_a = a.cols;
+        leading_dimension_b = b.cols;
+    }
+
+    CBLAS_UPLO uplo;
+    if (upper_triangular) {
+        uplo = CblasUpper;
+    } else {
+        uplo = CblasLower;
+    }
+
+    CBLAS_SIDE side;
+    if (left) {
+        side = CblasLeft;
+    } else {
+        side = CblasRight;
+    }
+
+    
+    CBLAS_TRANSPOSE transpose;
+    if (transposed) {
+        transpose = CblasTrans;
+    } else {
+        transpose = CblasNoTrans;
+    }
+    
+    CBLAS_DIAG diag;
+    if (unit_triangular) {
+        diag = CblasUnit;
+    } else {
+        diag = CblasNonUnit;
+    }
+
+    cblas_dtrsm(major, side, uplo, transpose, diag, b.rows, b.cols, alpha, (double*)kk_cptr_raw_unbox_borrowed(a.internal.owned, ctx), leading_dimension_a, (double*)kk_cptr_raw_unbox_borrowed(b.internal.owned, ctx), leading_dimension_b);
+
+    return b;
 }
